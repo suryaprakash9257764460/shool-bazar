@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= product ? 'Edit' : 'Add' %> Product - Shool Bazar Admin</title>
+  <title><%= product  'Edit' : 'Add' %> Product - Shool Bazar Admin</title>
   <link rel="stylesheet" href="/styles.css">
   <style>
     /* Admin styles (same as dashboard) */
@@ -46,52 +46,52 @@
         <img src="/images/logo.jpeg" alt="Shool Bazar" />
         <span>Shool <span class="gold">Bazar</span></span>
       </div>
-      <a href="/admin/dashboard" class="nav-item"><span class="icon">??</span><span>Dashboard</span></a>
-      <a href="/admin/products" class="nav-item active"><span class="icon">??</span><span>Products</span></a>
-      <a href="/admin/categories" class="nav-item"><span class="icon">???</span><span>Categories</span></a>
+      <a href="/admin/dashboard" class="nav-item"><span class="icon"></span><span>Dashboard</span></a>
+      <a href="/admin/products" class="nav-item active"><span class="icon"></span><span>Products</span></a>
+      <a href="/admin/categories" class="nav-item"><span class="icon"></span><span>Categories</span></a>
       <div class="sidebar-footer">
-        <a href="/admin/logout" class="nav-item"><span class="icon">??</span><span>Logout</span></a>
+        <a href="/admin/logout" class="nav-item"><span class="icon"></span><span>Logout</span></a>
       </div>
     </aside>
     <main class="admin-main">
       <div class="page-header">
-        <h1><%= product ? 'Edit Product' : 'Add Product' %></h1>
-        <a href="/admin/products" class="btn btn-outline-navy btn-sm">? Back</a>
+        <h1><%= product  'Edit Product' : 'Add Product' %></h1>
+        <a href="/admin/products" class="btn btn-outline-navy btn-sm"> Back</a>
       </div>
       <div class="admin-form">
-        <form method="POST" action="<%= product ? '/admin/products/edit/'+product.id : '/admin/products/add' %>">
+        <form method="POST" action="<%= product  '/admin/products/edit/'+product.id : '/admin/products/add' %>">
           <div class="form-group">
             <label for="product_url">Product/Affiliate URL *</label>
-            <input type="url" id="product_url" name="product_url" value="<%= product ? product.product_url : '' %>" required />
+            <input type="url" id="product_url" name="product_url" value="<%= product  product.product_url : '' %>" required />
             <span class="help">Paste the product URL to auto-fetch details (if supported).</span>
           </div>
           <div class="form-group">
             <label for="name">Product Name *</label>
-            <input type="text" id="name" name="name" value="<%= product ? product.name : '' %>" required />
+            <input type="text" id="name" name="name" value="<%= product  product.name : '' %>" required />
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="price">Price</label>
-              <input type="number" step="0.01" id="price" name="price" value="<%= product ? product.price : '' %>" />
+              <input type="number" step="0.01" id="price" name="price" value="<%= product  product.price : '' %>" />
             </div>
             <div class="form-group">
               <label for="mrp">MRP</label>
-              <input type="number" step="0.01" id="mrp" name="mrp" value="<%= product ? product.mrp : '' %>" />
+              <input type="number" step="0.01" id="mrp" name="mrp" value="<%= product  product.mrp : '' %>" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="discount">Discount (%)</label>
-              <input type="number" step="0.01" id="discount" name="discount" value="<%= product ? product.discount : '' %>" />
+              <input type="number" step="0.01" id="discount" name="discount" value="<%= product  product.discount : '' %>" />
             </div>
             <div class="form-group">
               <label for="brand">Brand</label>
-              <input type="text" id="brand" name="brand" value="<%= product ? product.brand : '' %>" />
+              <input type="text" id="brand" name="brand" value="<%= product  product.brand : '' %>" />
             </div>
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description"><%= product ? product.description : '' %></textarea>
+            <textarea id="description" name="description"><%= product  product.description : '' %></textarea>
           </div>
           <div class="form-row">
             <div class="form-group">
@@ -100,7 +100,7 @@
                 <option value="">No Category</option>
                 <% if (categories && categories.length) { %>
                   <% categories.forEach(cat => { %>
-                    <option value="<%= cat.id %>" <%= product && product.category_id == cat.id ? 'selected' : '' %>><%= cat.name %></option>
+                    <option value="<%= cat.id %>" <%= product && product.category_id == cat.id  'selected' : '' %>><%= cat.name %></option>
                   <% }); %>
                 <% } %>
               </select>
@@ -108,24 +108,24 @@
             <div class="form-group">
               <label for="status">Status</label>
               <select id="status" name="status">
-                <option value="active" <%= product && product.status === 'active' ? 'selected' : '' %>>Active</option>
-                <option value="inactive" <%= product && product.status === 'inactive' ? 'selected' : '' %>>Inactive</option>
-                <option value="draft" <%= product && product.status === 'draft' ? 'selected' : '' %>>Draft</option>
+                <option value="active" <%= product && product.status === 'active'  'selected' : '' %>>Active</option>
+                <option value="inactive" <%= product && product.status === 'inactive'  'selected' : '' %>>Inactive</option>
+                <option value="draft" <%= product && product.status === 'draft'  'selected' : '' %>>Draft</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <div class="checkbox-group">
-              <input type="checkbox" id="featured" name="featured" value="1" <%= product && product.featured ? 'checked' : '' %> />
+              <input type="checkbox" id="featured" name="featured" value="1" <%= product && product.featured  'checked' : '' %> />
               <label for="featured">Featured Product</label>
             </div>
             <div class="checkbox-group">
-              <input type="checkbox" id="homepage_visible" name="homepage_visible" value="1" <%= product && (product.homepage_visible != 0) ? 'checked' : '' %> />
+              <input type="checkbox" id="homepage_visible" name="homepage_visible" value="1" <%= product && (product.homepage_visible != 0)  'checked' : '' %> />
               <label for="homepage_visible">Show on Homepage</label>
             </div>
           </div>
           <div class="form-actions">
-            <button type="submit" class="btn btn-gold"><%= product ? 'Update' : 'Add' %> Product</button>
+            <button type="submit" class="btn btn-gold"><%= product  'Update' : 'Add' %> Product</button>
             <a href="/admin/products" class="btn btn-outline-navy">Cancel</a>
           </div>
           <% if (error) { %>
