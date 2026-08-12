@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
   <style>
-    /* Same full CSS as index.ejs – for brevity, include the same styles from index.ejs */
+    /* Same full CSS as index.ejs â€“ for brevity, include the same styles from index.ejs */
     /* (Copy the entire <style> block from index.ejs here) */
     :root { /* ... */ }
     /* ... all styles ... */
     /* For production, move to public/styles.css and include via <link> */
   </style>
-  <!-- Include the same CSS – for brevity we reference it; but to be safe, embed it -->
+  <!-- Include the same CSS â€“ for brevity we reference it; but to be safe, embed it -->
   <style>
     /* Paste the full CSS from index.ejs here */
     /* Alternatively, include a link to /styles.css if you create it */
@@ -27,7 +27,7 @@
     <div class="container">
       <div class="header-inner">
         <a href="/" class="header-brand">
-          <img src="/images/logo.jpeg" alt="Shool Bazar" />
+          <img src="/images/shool bazar logo.jpeg" alt="Shool Bazar" />
           <span>Shool <span class="gold">Bazar</span></span>
         </a>
         <div class="header-search" id="desktopSearch">
@@ -132,13 +132,13 @@
       <div class="pagination" id="paginationControls">
         <% if (totalPages > 1) { %>
           <% const current = currentPage || 1; %>
-          <a href="/category/<%= category.slug %>?page=<%= current-1 %>" class="<%= current <= 1 ? 'disabled' : '' %>">‹</a>
+          <a href="/category/<%= category.slug %>?page=<%= current-1 %>" class="<%= current <= 1 ? 'disabled' : '' %>">â€¹</a>
           <% for (let i = 1; i <= totalPages; i++) { %>
             <% if (i === 1 || i === totalPages || (i >= current-2 && i <= current+2)) { %>
               <a href="/category/<%= category.slug %>?page=<%= i %>" class="<%= i === current ? 'active' : '' %>"><%= i %></a>
-            <% } else if (i === current-3 || i === current+3) { %><span>…</span><% } %>
+            <% } else if (i === current-3 || i === current+3) { %><span>â€¦</span><% } %>
           <% } %>
-          <a href="/category/<%= category.slug %>?page=<%= current+1 %>" class="<%= current >= totalPages ? 'disabled' : '' %>">›</a>
+          <a href="/category/<%= category.slug %>?page=<%= current+1 %>" class="<%= current >= totalPages ? 'disabled' : '' %>">â€º</a>
         <% } %>
       </div>
     </div>
@@ -149,7 +149,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-brand"><img src="/images/logo.jpeg" alt="Shool Bazar" /><span>Shool <span class="gold">Bazar</span></span></div>
+          <div class="footer-brand"><img src="/images/shool bazar logo.jpeg" alt="Shool Bazar" /><span>Shool <span class="gold">Bazar</span></span></div>
           <p style="font-size:0.9rem;color:rgba(255,255,255,0.5);max-width:260px;">Discover amazing products from trusted merchants.</p>
         </div>
         <div><h4>Quick Links</h4><a href="/">Home</a><a href="/categories">Categories</a><a href="/about">About</a><a href="/contact">Contact</a></div>
