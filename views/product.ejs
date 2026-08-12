@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= product ? product.name : 'Product' %> - Shool Bazar</title>
+  <meta name="description" content="<%= product ? (product.short_description || product.description || '') : '' %>" />
+  <meta property="og:title" content="<%= product ? product.name : '' %> - Shool Bazar" />
+  <meta property="og:description" content="<%= product ? (product.short_description || product.description || '') : '' %>" />
+  <meta property="og:image" content="<%= product ? (product.image || '/images/logo.jpeg') : '/images/logo.jpeg' %>" />
+  <meta property="og:url" content="<%= 'https://yourdomain.com/product/' + (product ? product.slug : '') %>" />
+  <link rel="canonical" href="<%= 'https://yourdomain.com/product/' + (product ? product.slug : '') %>" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+  <style>
+    /* Same full CSS as index.ejs – embed here or link to /styles.css */
+    :root { /* ... */ }
+    /* ... */
+    .product-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; background:var(--white); border-radius:var(--radius); padding:32px; box-shadow:var(--shadow-sm); border:1px solid var(--gray-200); }
+    .product-detail .gallery .main-image { aspect-ratio:1/1; background:var(--gray-100); border-radius:var(--radius); overflow:hidden; }
+    .product-detail .gallery .thumbnails { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
+    .product-detail .gallery .thumbnails img { width:64px; height:64px; object-fit:cover; border-radius:var(--radius-sm); border:2px solid transparent; cursor:pointer; flex-shrink:0; background:var(--gray-100); }
+    .product-detail .gallery .thumbnails img:hover, .product-detail .gallery .thumbnails img.active { border-color:var(--gold); }
+    .product-detail .info .product-name { font-size:1.8rem; font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:4px; }
+    .product-detail .info .product-brand { font-size:0.95rem; color:var(--gray-600); margin-bottom:12px; }
+    .product-detail .info .price-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:8px; }
+    .product-detail .info .current-price { font-size:2rem; font-weight:700; color:var(--navy); }
+    .product-detail .info .original-price { font-size:1.1rem; color:var(--gray-500); text-decoration:line-through; }
+    .product-detail .info .discount-text { font-size:0.9rem; font-weight:700; color:#dc3545; background:#fde8ea; padding:2px 14px; border-radius:var(--radius-full); }
+    .product-detail .info .description { color:var(--gray-700); line-height:1.7; margin-bottom:20px; }
+    .product-detail .info .meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin-bottom:20px; font-size:0.9rem; }
+    .product-detail .info .buy-section { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+    .product-detail .info .buy-section .btn { flex:1; min-width:160px; padding:14px 28px; font-size:1rem; }
+    .product-detail .info .merchant-info { margin-top:12px; font-size:0.85rem; color:var(--gray-500); }
+    .product-detail .features-specs { margin-top:32px; display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .product-detail .features-specs h3 { font-size:1.1rem; font-weight:600; color:var(--navy); margin-bottom:8px; }
+    .product-detail .features-specs ul { list-style:none; padding:0; }
+    .product-detail .features-specs ul li { padding:4px 0; padding-left:20px; position:relative; color:var(--gray-700); }
+    .product-detail .features-specs ul li::before { content:"•"; position:absolute; left:0; color:var(--gold); font-weight:700; }
+    @media (max-width:1024px) { .product-detail-grid { grid-template-columns:1fr; padding:24px; gap:24px; } }
+    @media (max-width:768px) { .product-detail-grid { padding:16px; } .product-detail .info .product-name { font-size:1.5rem; } .product-detail .info .current-price { font-size:1.6rem; } .product-detail .info .meta-grid { grid-template-columns:1fr; gap:4px; } .product-detail .features-specs { grid-template-columns:1fr; gap:20px; } .product-detail .info .buy-section .btn { min-width:120px; padding:12px 20px; font-size:0.9rem; } }
+  </style>
+</head>
+<body>
+  <!-- HEADER (same as index) -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="header-brand"><img src="/images/logo.jpeg" alt="Shool Bazar" /><span>Shool <span class="gold">Bazar</span></span></a>
+        <div class="header-search" id="desktopSearch">
+          <input type="text" id="searchInputDesktop" placeholder="Search..." autocomplete="off" />
+          <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <div class="search-results-overlay" id="searchResultsDesktop"></div>
+        </div>
+        <div class="header-actions">
+          <a href="/" class="btn btn-outline-gold btn-sm"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg><span>Home</span></a>
+          <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+      <div class="header-search mobile-show" id="mobileSearch" style="display:none; margin-top:8px;">
+        <input type="text" id="searchInputMobile" placeholder="Search..." autocomplete="off" />
+        <span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <div class="search-results-overlay" id="searchResultsMobile"></div>
+      </div>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="/">Home</a><a href="/categories">Categories</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAV -->
+  <nav class="category-nav" id="categoryNav">
+    <div class="container" id="categoryList">
+      <% if (categories && categories.length) { %>
+        <a href="/" class="">?? All</a>
+        <% categories.forEach(cat => { %>
+          <a href="/category/<%= cat.slug %>" data-cat-id="<%= cat.id %>"><%= cat.icon || '??' %> <%= cat.name %></a>
+        <% }); %>
+      <% } else { %>
+        <span style="color:var(--gray-500);font-size:0.85rem;padding:4px 8px;">No categories</span>
+      <% } %>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span class="separator">›</span>
+      <% if (product && product.category_name) { %>
+        <a href="/category/<%= product.category_slug || '#' %>"><%= product.category_name %></a>
+        <span class="separator">›</span>
+      <% } %>
+      <span><%= product ? product.name : 'Product' %></span>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL -->
+  <section class="product-detail">
+    <div class="container">
+      <div class="product-detail-grid">
+        <!-- Gallery -->
+        <div class="gallery">
+          <div class="main-image">
+            <img src="<%= product ? (product.image || '/images/placeholder.png') : '/images/placeholder.png' %>" alt="<%= product ? product.name : '' %>" id="mainImage" />
+          </div>
+          <div class="thumbnails" id="thumbnails">
+            <% if (product) { %>
+              <% const images = product.images ? product.images.split(',').map(i => i.trim()) : []; %>
+              <% if (images.length) { %>
+                <% images.forEach(img => { %>
+                  <img src="<%= img %>" alt="Thumbnail" onclick="document.getElementById('mainImage').src=this.src; document.querySelectorAll('.thumbnails img').forEach(el => el.classList.remove('active')); this.classList.add('active');" />
+                <% }); %>
+              <% } else { %>
+                <img src="<%= product.image || '/images/placeholder.png' %>" alt="Thumbnail" class="active" />
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+        <!-- Info -->
+        <div class="info">
+          <h1 class="product-name"><%= product ? product.name : 'Product' %></h1>
+          <% if (product && product.brand) { %><div class="product-brand"><strong>Brand:</strong> <%= product.brand %></div><% } %>
+          <div class="price-row">
+            <% if (product && product.price) { %>
+              <span class="current-price">?<%= Number(product.price).toLocaleString('en-IN') %></span>
+              <% if (product.mrp && product.mrp != product.price) { %><span class="original-price">?<%= Number(product.mrp).toLocaleString('en-IN') %></span><% } %>
+              <% if (product.discount && product.discount > 0) { %><span class="discount-text"><%= Math.round(product.discount) %>% OFF</span><% } %>
+            <% } else { %>
+              <span style="font-size:1.2rem;color:var(--gray-500);">Price on request</span>
+            <% } %>
+          </div>
+          <% if (product && product.description) { %><div class="description"><%= product.description %></div><% } %>
+          <div class="meta-grid">
+            <% if (product && product.brand) { %><span class="label">Brand</span><span class="value"><%= product.brand %></span><% } %>
+            <% if (product && product.weight) { %><span class="label">Weight</span><span class="value"><%= product.weight %></span><% } %>
+            <% if (product && product.size) { %><span class="label">Size</span><span class="value"><%= product.size %></span><% } %>
+            <% if (product && product.variant) { %><span class="label">Variant</span><span class="value"><%= product.variant %></span><% } %>
+            <% if (product && product.merchant) { %><span class="label">Merchant</span><span class="value"><%= product.merchant %></span><% } %>
+          </div>
+          <div class="buy-section">
+            <a href="/go/<%= product ? product.slug : '' %>" class="btn btn-gold btn-lg" data-track-click="<%= product ? product.id : '' %>">Buy Now</a>
+            <a href="/" class="btn btn-outline-navy btn-lg">Continue Shopping</a>
+          </div>
+          <div class="merchant-info">You will be redirected to the merchant's website to complete your purchase.</div>
+        </div>
+      </div>
+
+      <!-- Features & Specs -->
+      <div class="features-specs">
+        <% if (product && product.features) { %>
+          <div>
+            <h3>Key Features</h3>
+            <ul>
+              <% product.features.split(',').forEach(f => { %>
+                <li><%= f.trim() %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+        <% if (product && product.specifications) { %>
+          <div>
+            <h3>Specifications</h3>
+            <ul>
+              <% product.specifications.split(',').forEach(s => { %>
+                <li><%= s.trim() %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><div class="footer-brand"><img src="/images/logo.jpeg" alt="Shool Bazar" /><span>Shool <span class="gold">Bazar</span></span></div><p style="font-size:0.9rem;color:rgba(255,255,255,0.5);max-width:260px;">Discover amazing products from trusted merchants.</p></div>
+        <div><h4>Quick Links</h4><a href="/">Home</a><a href="/categories">Categories</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+        <div><h4>Policies</h4><a href="/privacy">Privacy Policy</a><a href="/terms">Terms &amp; Conditions</a><a href="/disclaimer">Disclaimer</a></div>
+        <div><h4>Connect</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">Twitter</a></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 Shool Bazar. All rights reserved.</span><span>Made with ??</span></div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- META PIXEL & SCRIPTS -->
+  <script>
+    // Meta Pixel and client scripts (same as index.ejs)
+    // ...
+    // Track ViewContent
+    <% if (product) { %>
+      window.trackProductView({
+        id: '<%= product.id %>',
+        name: '<%= product.name %>',
+        price: <%= product.price || 0 %>
+      });
+    <% } %>
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1365924354934790&ev=PageView&noscript=1"/></noscript>
+  <script>
+    // Client-side search, hamburger, tracking – same as index
+    // (copy from index.ejs)
+  </script>
+</body>
+</html>
