@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Shool Bazar</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="admin-login-page">
+  <div class="admin-login-box">
+    <div class="login-logo">
+      <img src="/images/logo.jpeg" alt="Shool Bazar" />
+      <span>Shool <span class="gold">Bazar</span></span>
+    </div>
+    <p class="login-sub">Admin Login</p>
+    <form method="POST" action="/admin/login">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autofocus />
+      </div>
+      <button type="submit" class="btn btn-gold">Login</button>
+      <% if (error) { %>
+        <div class="error-msg show"><%= error %></div>
+      <% } %>
+    </form>
+  </div>
+</body>
+</html>
