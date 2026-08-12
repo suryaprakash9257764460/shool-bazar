@@ -6,7 +6,7 @@
   <title>Products - Shool Bazar Admin</title>
   <link rel="stylesheet" href="/styles.css">
   <style>
-    /* Same admin styles as dashboard – include here or in /styles.css */
+    /* Same admin styles as dashboard â€“ include here or in /styles.css */
     .admin-layout { display:flex; min-height:100vh; background:var(--gray-50); }
     .admin-sidebar { width:260px; background:var(--navy); color:var(--white); padding:24px 0; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto; }
     .admin-sidebar .sidebar-brand { display:flex; align-items:center; gap:10px; padding:0 24px 24px; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:16px; }
@@ -48,11 +48,11 @@
         <img src="/images/logo.jpeg" alt="Shool Bazar" />
         <span>Shool <span class="gold">Bazar</span></span>
       </div>
-      <a href="/admin/dashboard" class="nav-item"><span class="icon">??</span><span>Dashboard</span></a>
-      <a href="/admin/products" class="nav-item active"><span class="icon">??</span><span>Products</span></a>
-      <a href="/admin/categories" class="nav-item"><span class="icon">???</span><span>Categories</span></a>
+      <a href="/admin/dashboard" class="nav-item"><span class="icon"></span><span>Dashboard</span></a>
+      <a href="/admin/products" class="nav-item active"><span class="icon"></span><span>Products</span></a>
+      <a href="/admin/categories" class="nav-item"><span class="icon"></span><span>Categories</span></a>
       <div class="sidebar-footer">
-        <a href="/admin/logout" class="nav-item"><span class="icon">??</span><span>Logout</span></a>
+        <a href="/admin/logout" class="nav-item"><span class="icon"></span><span>Logout</span></a>
       </div>
     </aside>
     <main class="admin-main">
@@ -85,17 +85,17 @@
                   <td><img src="<%= p.image || '/images/placeholder.png' %>" alt="<%= p.name %>" class="product-thumb" onerror="this.src='/images/placeholder.png'" /></td>
                   <td><%= p.name %></td>
                   <td><%= p.category_name || 'Uncategorized' %></td>
-                  <td><%= p.price ? '?'+Number(p.price).toLocaleString('en-IN') : '-' %></td>
+                  <td><%= p.price  ''+Number(p.price).toLocaleString('en-IN') : '-' %></td>
                   <td><%= p.merchant || '-' %></td>
-                  <td><span class="badge <%= p.status === 'active' ? 'badge-active' : (p.status === 'draft' ? 'badge-draft' : 'badge-inactive') %>"><%= p.status %></span></td>
-                  <td><%= p.featured ? '?' : '' %></td>
+                  <td><span class="badge <%= p.status === 'active'  'badge-active' : (p.status === 'draft'  'badge-draft' : 'badge-inactive') %>"><%= p.status %></span></td>
+                  <td><%= p.featured  '' : '' %></td>
                   <td><%= p.click_count || 0 %></td>
                   <td class="actions">
                     <a href="/admin/products/edit/<%= p.id %>" class="btn btn-outline-navy btn-sm">Edit</a>
                     <form method="POST" action="/admin/products/toggle/<%= p.id %>" style="display:inline;">
-                      <button type="submit" class="btn btn-sm <%= p.status === 'active' ? 'btn-outline-navy' : 'btn-gold' %>"><%= p.status === 'active' ? 'Deactivate' : 'Activate' %></button>
+                      <button type="submit" class="btn btn-sm <%= p.status === 'active'  'btn-outline-navy' : 'btn-gold' %>"><%= p.status === 'active'  'Deactivate' : 'Activate' %></button>
                     </form>
-                    <form method="POST" action="/admin/products/delete/<%= p.id %>" style="display:inline;" onsubmit="return confirm('Delete this product?')">
+                    <form method="POST" action="/admin/products/delete/<%= p.id %>" style="display:inline;" onsubmit="return confirm('Delete this product')">
                       <button type="submit" class="btn btn-sm" style="background:#dc3545;color:white;border-color:#dc3545;">Delete</button>
                     </form>
                   </td>
