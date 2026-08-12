@@ -47,17 +47,17 @@
         <img src="/images/logo.jpeg" alt="Shool Bazar" />
         <span>Shool <span class="gold">Bazar</span></span>
       </div>
-      <a href="/admin/dashboard" class="nav-item"><span class="icon">??</span><span>Dashboard</span></a>
-      <a href="/admin/products" class="nav-item active"><span class="icon">??</span><span>Products</span></a>
-      <a href="/admin/categories" class="nav-item"><span class="icon">???</span><span>Categories</span></a>
+      <a href="/admin/dashboard" class="nav-item"><span class="icon"></span><span>Dashboard</span></a>
+      <a href="/admin/products" class="nav-item active"><span class="icon"></span><span>Products</span></a>
+      <a href="/admin/categories" class="nav-item"><span class="icon"></span><span>Categories</span></a>
       <div class="sidebar-footer">
-        <a href="/admin/logout" class="nav-item"><span class="icon">??</span><span>Logout</span></a>
+        <a href="/admin/logout" class="nav-item"><span class="icon"></span><span>Logout</span></a>
       </div>
     </aside>
     <main class="admin-main">
       <div class="page-header">
         <h1>Bulk Add Products</h1>
-        <a href="/admin/products" class="btn btn-outline-navy btn-sm">? Back</a>
+        <a href="/admin/products" class="btn btn-outline-navy btn-sm"> Back</a>
       </div>
       <div class="admin-form">
         <form method="POST" action="/admin/products/bulk">
@@ -108,9 +108,9 @@
             <h3 style="font-size:1.1rem;font-weight:600;color:var(--navy);margin-bottom:12px;">Import Results</h3>
             <div class="bulk-status">
               <% results.forEach(r => { %>
-                <div class="status-item <%= r.status === 'Imported' ? 'success' : 'error' %>">
+                <div class="status-item <%= r.status === 'Imported'  'success' : 'error' %>">
                   <strong><%= r.url %></strong><br />
-                  Status: <%= r.status %><%= r.error ? ' - ' + r.error : '' %>
+                  Status: <%= r.status %><%= r.error  ' - ' + r.error : '' %>
                 </div>
               <% }); %>
             </div>
