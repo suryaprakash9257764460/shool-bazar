@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
   <style>
-    /* All CSS from the original public page – copy here for brevity */
+    /* All CSS from the original public page â€“ copy here for brevity */
     /* For production, move to public/styles.css */
     :root {
       --navy: #0a1628;
@@ -177,7 +177,7 @@
     <div class="container">
       <div class="header-inner">
         <a href="/" class="header-brand">
-          <img src="/images/logo.jpeg" alt="Shool Bazar" />
+          <img src="/images/shool-bazar-logo.jpeg" alt="Shool Bazar" />
           <span>Shool <span class="gold">Bazar</span></span>
         </a>
         <div class="header-search" id="desktopSearch">
@@ -352,15 +352,15 @@
         <% if (totalPages > 1) { %>
           <% const current = currentPage || 1; %>
           <% const prev = current > 1 ? current - 1 : 1; %>
-          <a href="/?page=<%= prev %>" class="<%= current <= 1 ? 'disabled' : '' %>">‹</a>
+          <a href="/?page=<%= prev %>" class="<%= current <= 1 ? 'disabled' : '' %>">â€¹</a>
           <% for (let i = 1; i <= totalPages; i++) { %>
             <% if (i === 1 || i === totalPages || (i >= current-2 && i <= current+2)) { %>
               <a href="/?page=<%= i %>" class="<%= i === current ? 'active' : '' %>"><%= i %></a>
             <% } else if (i === current-3 || i === current+3) { %>
-              <span>…</span>
+              <span>â€¦</span>
             <% } %>
           <% } %>
-          <a href="/?page=<%= current+1 %>" class="<%= current >= totalPages ? 'disabled' : '' %>">›</a>
+          <a href="/?page=<%= current+1 %>" class="<%= current >= totalPages ? 'disabled' : '' %>">â€º</a>
         <% } %>
       </div>
     </div>
@@ -452,7 +452,7 @@
             results.slice(0,8).forEach(p => {
               const img = p.image || '/images/placeholder.png';
               const price = p.price ? '?'+Number(p.price).toLocaleString('en-IN') : '';
-              html += `<a href="/product/${p.slug}" class="search-result-item"><img src="${img}" alt="${p.name}" loading="lazy" onerror="this.src='/images/placeholder.png'" /><div class="result-info"><div class="result-name">${p.name}</div><div class="result-meta">${p.brand||''} ${p.category_name?'· '+p.category_name:''}</div></div>${price ? `<div class="result-price">${price}</div>` : ''}</a>`;
+              html += `<a href="/product/${p.slug}" class="search-result-item"><img src="${img}" alt="${p.name}" loading="lazy" onerror="this.src='/images/placeholder.png'" /><div class="result-info"><div class="result-name">${p.name}</div><div class="result-meta">${p.brand||''} ${p.category_name?'Â· '+p.category_name:''}</div></div>${price ? `<div class="result-price">${price}</div>` : ''}</a>`;
             });
             if (results.length > 8) html += `<div style="padding:8px 16px;text-align:center;font-size:0.85rem;color:var(--gray-500);border-top:1px solid var(--gray-100);"><a href="/search?q=${encodeURIComponent(query)}" style="color:var(--gold);font-weight:600;">View all ${results.length} results ?</a></div>`;
             container.innerHTML = html;
