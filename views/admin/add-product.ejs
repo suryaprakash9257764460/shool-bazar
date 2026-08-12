@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= product ? 'Edit' : 'Add' %> Product - Shool Bazar Admin</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Admin styles (same as dashboard) */
+    .admin-layout { display:flex; min-height:100vh; background:var(--gray-50); }
+    .admin-sidebar { width:260px; background:var(--navy); color:var(--white); padding:24px 0; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto; }
+    .admin-sidebar .sidebar-brand { display:flex; align-items:center; gap:10px; padding:0 24px 24px; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:16px; }
+    .admin-sidebar .sidebar-brand img { height:36px; width:auto; }
+    .admin-sidebar .sidebar-brand span { font-size:1.1rem; font-weight:700; }
+    .admin-sidebar .sidebar-brand span .gold { color:var(--gold); }
+    .admin-sidebar .nav-item { display:flex; align-items:center; gap:12px; padding:12px 24px; color:rgba(255,255,255,0.6); transition:var(--transition); font-weight:500; font-size:0.9rem; border-left:3px solid transparent; }
+    .admin-sidebar .nav-item:hover { color:var(--white); background:rgba(255,255,255,0.05); }
+    .admin-sidebar .nav-item.active { color:var(--white); background:rgba(212,167,69,0.12); border-left-color:var(--gold); }
+    .admin-sidebar .nav-item .icon { font-size:1.2rem; width:24px; text-align:center; }
+    .admin-sidebar .sidebar-footer { margin-top:auto; padding:16px 24px; border-top:1px solid rgba(255,255,255,0.08); }
+    .admin-sidebar .sidebar-footer .nav-item { padding:8px 0; font-size:0.85rem; }
+    .admin-sidebar .sidebar-footer .nav-item:hover { background:none; }
+    .admin-main { flex:1; padding:24px 32px; max-width:calc(100% - 260px); }
+    .admin-main .page-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:24px; }
+    .admin-main .page-header h1 { font-size:1.6rem; font-weight:700; color:var(--navy); }
+    .admin-form { background:var(--white); border-radius:var(--radius); padding:32px; border:1px solid var(--gray-200); box-shadow:var(--shadow-sm); max-width:800px; }
+    .admin-form .form-group { margin-bottom:18px; }
+    .admin-form .form-group label { display:block; font-weight:600; font-size:0.9rem; color:var(--gray-700); margin-bottom:4px; }
+    .admin-form .form-group .help { font-size:0.8rem; color:var(--gray-500); margin-top:2px; }
+    .admin-form .form-group input, .admin-form .form-group select, .admin-form .form-group textarea { width:100%; padding:10px 14px; border-radius:var(--radius-sm); border:1px solid var(--gray-300); font-size:0.95rem; transition:var(--transition); outline:2px solid transparent; background:var(--white); }
+    .admin-form .form-group input:focus, .admin-form .form-group select:focus, .admin-form .form-group textarea:focus { border-color:var(--gold); outline-color:rgba(212,167,69,0.2); }
+    .admin-form .form-group textarea { min-height:100px; resize:vertical; }
+    .admin-form .form-group .checkbox-group { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .admin-form .form-group .checkbox-group input[type="checkbox"] { width:auto; width:20px; height:20px; accent-color:var(--gold); cursor:pointer; }
+    .admin-form .form-group .checkbox-group label { font-weight:400; cursor:pointer; }
+    .admin-form .form-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .admin-form .form-actions { display:flex; gap:12px; margin-top:24px; padding-top:20px; border-top:1px solid var(--gray-200); flex-wrap:wrap; }
+    @media (max-width:1024px) { .admin-sidebar { width:72px; padding:16px 0; } .admin-sidebar .sidebar-brand span, .admin-sidebar .nav-item span:not(.icon), .admin-sidebar .sidebar-footer .nav-item span:not(.icon) { display:none; } .admin-sidebar .sidebar-brand { padding:0 16px 16px; justify-content:center; } .admin-sidebar .nav-item { padding:14px 16px; justify-content:center; } .admin-sidebar .sidebar-footer .nav-item { padding:14px 16px; justify-content:center; } .admin-main { max-width:calc(100% - 72px); padding:16px; } }
+    @media (max-width:768px) { .admin-layout { flex-direction:column; } .admin-sidebar { width:100%; height:auto; position:static; flex-direction:row; padding:8px 16px; flex-wrap:wrap; align-items:center; gap:4px; } .admin-sidebar .sidebar-brand { padding:0; margin:0; border:none; flex:1; } .admin-sidebar .sidebar-brand img { height:28px; } .admin-sidebar .sidebar-brand span { display:inline !important; font-size:0.95rem; } .admin-sidebar .nav-item { padding:8px 12px; font-size:0.8rem; border-left:none; border-bottom:2px solid transparent; } .admin-sidebar .nav-item.active { border-left:none; border-bottom-color:var(--gold); } .admin-sidebar .nav-item .icon { font-size:1rem; width:20px; } .admin-sidebar .nav-item span:not(.icon) { display:inline !important; } .admin-sidebar .sidebar-footer { display:none; } .admin-main { max-width:100%; padding:12px; } .admin-main .page-header h1 { font-size:1.3rem; } .admin-form { padding:16px; } .admin-form .form-row { grid-template-columns:1fr; gap:12px; } }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <img src="/images/logo.jpeg" alt="Shool Bazar" />
+        <span>Shool <span class="gold">Bazar</span></span>
+      </div>
+      <a href="/admin/dashboard" class="nav-item"><span class="icon">??</span><span>Dashboard</span></a>
+      <a href="/admin/products" class="nav-item active"><span class="icon">??</span><span>Products</span></a>
+      <a href="/admin/categories" class="nav-item"><span class="icon">???</span><span>Categories</span></a>
+      <div class="sidebar-footer">
+        <a href="/admin/logout" class="nav-item"><span class="icon">??</span><span>Logout</span></a>
+      </div>
+    </aside>
+    <main class="admin-main">
+      <div class="page-header">
+        <h1><%= product ? 'Edit Product' : 'Add Product' %></h1>
+        <a href="/admin/products" class="btn btn-outline-navy btn-sm">? Back</a>
+      </div>
+      <div class="admin-form">
+        <form method="POST" action="<%= product ? '/admin/products/edit/'+product.id : '/admin/products/add' %>">
+          <div class="form-group">
+            <label for="product_url">Product/Affiliate URL *</label>
+            <input type="url" id="product_url" name="product_url" value="<%= product ? product.product_url : '' %>" required />
+            <span class="help">Paste the product URL to auto-fetch details (if supported).</span>
+          </div>
+          <div class="form-group">
+            <label for="name">Product Name *</label>
+            <input type="text" id="name" name="name" value="<%= product ? product.name : '' %>" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" step="0.01" id="price" name="price" value="<%= product ? product.price : '' %>" />
+            </div>
+            <div class="form-group">
+              <label for="mrp">MRP</label>
+              <input type="number" step="0.01" id="mrp" name="mrp" value="<%= product ? product.mrp : '' %>" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="discount">Discount (%)</label>
+              <input type="number" step="0.01" id="discount" name="discount" value="<%= product ? product.discount : '' %>" />
+            </div>
+            <div class="form-group">
+              <label for="brand">Brand</label>
+              <input type="text" id="brand" name="brand" value="<%= product ? product.brand : '' %>" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description"><%= product ? product.description : '' %></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="category_id">Category</label>
+              <select id="category_id" name="category_id">
+                <option value="">No Category</option>
+                <% if (categories && categories.length) { %>
+                  <% categories.forEach(cat => { %>
+                    <option value="<%= cat.id %>" <%= product && product.category_id == cat.id ? 'selected' : '' %>><%= cat.name %></option>
+                  <% }); %>
+                <% } %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status" name="status">
+                <option value="active" <%= product && product.status === 'active' ? 'selected' : '' %>>Active</option>
+                <option value="inactive" <%= product && product.status === 'inactive' ? 'selected' : '' %>>Inactive</option>
+                <option value="draft" <%= product && product.status === 'draft' ? 'selected' : '' %>>Draft</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="featured" name="featured" value="1" <%= product && product.featured ? 'checked' : '' %> />
+              <label for="featured">Featured Product</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="homepage_visible" name="homepage_visible" value="1" <%= product && (product.homepage_visible != 0) ? 'checked' : '' %> />
+              <label for="homepage_visible">Show on Homepage</label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-gold"><%= product ? 'Update' : 'Add' %> Product</button>
+            <a href="/admin/products" class="btn btn-outline-navy">Cancel</a>
+          </div>
+          <% if (error) { %>
+            <div style="color:#dc3545;margin-top:12px;"><%= error %></div>
+          <% } %>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
