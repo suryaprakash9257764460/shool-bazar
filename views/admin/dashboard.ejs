@@ -45,11 +45,11 @@
         <img src="/images/shool%20bazar%20logo.jpeg" alt="Shool Bazar" />
         <span>Shool <span class="gold">Bazar</span></span>
       </div>
-      <a href="/admin/dashboard" class="nav-item active"><span class="icon">??</span><span>Dashboard</span></a>
-      <a href="/admin/products" class="nav-item"><span class="icon">??</span><span>Products</span></a>
-      <a href="/admin/categories" class="nav-item"><span class="icon">???</span><span>Categories</span></a>
+      <a href="/admin/dashboard" class="nav-item active"><span class="icon"></span><span>Dashboard</span></a>
+      <a href="/admin/products" class="nav-item"><span class="icon"></span><span>Products</span></a>
+      <a href="/admin/categories" class="nav-item"><span class="icon"></span><span>Categories</span></a>
       <div class="sidebar-footer">
-        <a href="/admin/logout" class="nav-item"><span class="icon">??</span><span>Logout</span></a>
+        <a href="/admin/logout" class="nav-item"><span class="icon"></span><span>Logout</span></a>
       </div>
     </aside>
     <!-- Main -->
@@ -61,32 +61,32 @@
       <!-- Stats -->
       <div class="admin-stats">
         <div class="admin-stat-card">
-          <span class="stat-icon">??</span>
+          <span class="stat-icon"></span>
           <div class="stat-number"><%= totalProducts || 0 %></div>
           <div class="stat-label">Total Products</div>
         </div>
         <div class="admin-stat-card">
-          <span class="stat-icon">?</span>
+          <span class="stat-icon"></span>
           <div class="stat-number"><%= activeProducts || 0 %></div>
           <div class="stat-label">Active Products</div>
         </div>
         <div class="admin-stat-card">
-          <span class="stat-icon">?</span>
+          <span class="stat-icon"></span>
           <div class="stat-number"><%= inactiveProducts || 0 %></div>
           <div class="stat-label">Inactive Products</div>
         </div>
         <div class="admin-stat-card">
-          <span class="stat-icon">???</span>
+          <span class="stat-icon"></span>
           <div class="stat-number"><%= totalCategories || 0 %></div>
           <div class="stat-label">Categories</div>
         </div>
         <div class="admin-stat-card">
-          <span class="stat-icon">??</span>
+          <span class="stat-icon"></span>
           <div class="stat-number"><%= uncategorized || 0 %></div>
           <div class="stat-label">Uncategorized</div>
         </div>
         <div class="admin-stat-card">
-          <span class="stat-icon">??</span>
+          <span class="stat-icon"></span>
           <div class="stat-number"><%= totalClicks || 0 %></div>
           <div class="stat-label">Total Clicks</div>
         </div>
@@ -103,8 +103,8 @@
                   <tr>
                     <td><img src="<%= p.image || '/images/placeholder.png' %>" alt="<%= p.name %>" class="product-thumb" style="width:48px;height:48px;object-fit:cover;border-radius:var(--radius-sm);background:var(--gray-100);" onerror="this.src='/images/placeholder.png'" /></td>
                     <td><%= p.name %></td>
-                    <td><%= p.price ? '?'+Number(p.price).toLocaleString('en-IN') : '-' %></td>
-                    <td><span class="badge <%= p.status === 'active' ? 'badge-active' : 'badge-inactive' %>"><%= p.status %></span></td>
+                    <td><%= p.price  ''+Number(p.price).toLocaleString('en-IN') : '-' %></td>
+                    <td><span class="badge <%= p.status === 'active'  'badge-active' : 'badge-inactive' %>"><%= p.status %></span></td>
                     <td><%= new Date(p.created_at).toLocaleDateString() %></td>
                   </tr>
                 <% }); %>
@@ -128,7 +128,7 @@
                     <td><img src="<%= p.image || '/images/placeholder.png' %>" alt="<%= p.name %>" class="product-thumb" style="width:48px;height:48px;object-fit:cover;border-radius:var(--radius-sm);background:var(--gray-100);" onerror="this.src='/images/placeholder.png'" /></td>
                     <td><%= p.name %></td>
                     <td><%= p.click_count || 0 %></td>
-                    <td><%= p.price ? '?'+Number(p.price).toLocaleString('en-IN') : '-' %></td>
+                    <td><%= p.price  ''+Number(p.price).toLocaleString('en-IN') : '-' %></td>
                   </tr>
                 <% }); %>
               <% } else { %>
